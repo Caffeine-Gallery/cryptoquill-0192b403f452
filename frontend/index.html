@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Blog</title>
+    <title>Hacker's Code Blog</title>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <div id="matrix-bg"></div>
     <header>
-        <h1>Crypto Blog</h1>
-        <button id="newPostBtn">New Post</button>
+        <h1>&lt;Hacker's Code Blog /&gt;</h1>
+        <button id="newPostBtn">New Commit</button>
     </header>
 
     <main>
         <section id="posts"></section>
 
         <section id="newPostForm" style="display: none;">
-            <h2>Create New Post</h2>
+            <h2>Push New Commit</h2>
             <form id="postForm">
-                <input type="text" id="title" placeholder="Title" required>
-                <input type="text" id="author" placeholder="Author" required>
+                <input type="text" id="title" placeholder="Commit Message" required>
+                <input type="text" id="author" placeholder="Developer" required>
+                <input type="text" id="tags" placeholder="Tags (comma-separated)" required>
                 <div id="editor"></div>
-                <button type="submit">Submit</button>
+                <button type="submit">Push</button>
             </form>
         </section>
     </main>

@@ -2,10 +2,11 @@ type Post =
  record {
    author: text;
    body: text;
+   tags: vec text;
    timestamp: int;
    title: text;
  };
 service : {
-  createPost: (text, text, text) -> ();
+  createPost: (text, text, text, vec text) -> ();
   getPosts: () -> (vec Post) query;
 }

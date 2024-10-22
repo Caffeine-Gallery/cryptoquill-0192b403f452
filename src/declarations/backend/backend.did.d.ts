@@ -5,11 +5,15 @@ import type { IDL } from '@dfinity/candid';
 export interface Post {
   'title' : string,
   'body' : string,
+  'tags' : Array<string>,
   'author' : string,
   'timestamp' : bigint,
 }
 export interface _SERVICE {
-  'createPost' : ActorMethod<[string, string, string], undefined>,
+  'createPost' : ActorMethod<
+    [string, string, string, Array<string>],
+    undefined
+  >,
   'getPosts' : ActorMethod<[], Array<Post>>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;

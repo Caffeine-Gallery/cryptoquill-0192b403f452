@@ -19,9 +19,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     e.preventDefault();
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
+    const tags = document.getElementById('tags').value.split(',').map(tag => tag.trim());
     const body = quill.root.innerHTML;
 
-    await backend.createPost(title, body, author);
+    await backend.createPost(title, body, author, tags);
     newPostForm.style.display = 'none';
     postForm.reset();
     quill.setContents([]);
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   await displayPosts();
+  initMatrixBackground();
 });
 
 async function displayPosts() {
@@ -40,10 +42,48 @@ async function displayPosts() {
     const article = document.createElement('article');
     article.innerHTML = `
       <h2>${post.title}</h2>
-      <p class="author">By ${post.author}</p>
+      <p class="author">Committed by ${post.author}</p>
       <div class="content">${post.body}</div>
       <p class="timestamp">${new Date(Number(post.timestamp) / 1000000).toLocaleString()}</p>
+      <p class="tags">${post.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</p>
     `;
     postsSection.appendChild(article);
   });
+}
+
+function initMatrixBackground() {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  document.getElementById('matrix-bg').appendChild(canvas);
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const columns = canvas.width / 20;
+  const drops = [];
+
+  for (let i = 0; i < columns; i++) {
+    drops[i] = 1;
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#0F0';
+    ctx.font = '15px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = String.fromCharCode(Math.random() * 128);
+      ctx.fillText(text, i * 20, drops[i] * 20);
+
+      if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 33);
 }

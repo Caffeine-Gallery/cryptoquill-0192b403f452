@@ -11,16 +11,18 @@ actor {
     body: Text;
     author: Text;
     timestamp: Int;
+    tags: [Text];
   };
 
   stable var posts : List.List<Post> = List.nil();
 
-  public func createPost(title: Text, body: Text, author: Text) : async () {
+  public func createPost(title: Text, body: Text, author: Text, tags: [Text]) : async () {
     let newPost : Post = {
       title = title;
       body = body;
       author = author;
       timestamp = Time.now();
+      tags = tags;
     };
     posts := List.push(newPost, posts);
   };
